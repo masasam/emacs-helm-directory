@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.2
+;; Version: 0.3.1
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -99,13 +99,18 @@
   :group 'helm-phalcon
   :type 'string)
 
-(defun helm-phalcon--open-dired (file)
-  "Open file with dired as FILE."
-  (dired (file-name-directory file)))
-
 (defvar helm-phalcon--action
   '(("Open File" . find-file)
     ("Open Directory" . helm-phalcon--open-dired)))
+
+(defmacro helm-phalcon--line-string ()
+  "Helm phalcon macro."
+  `(buffer-substring-no-properties
+    (line-beginning-position) (line-end-position)))
+
+(defun helm-phalcon--open-dired (file)
+  "Open file with dired as FILE."
+  (dired (file-name-directory file)))
 
 (defun helm-phalcon--list-candidates ()
   "Helm list candidates."
@@ -122,7 +127,12 @@
       (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
-      (push (directory-file-name (concat helm-phalcon-basedir helm-phalcon-views)) paths)
+      (unless (zerop (apply #'call-process "ls" nil t nil (concat helm-phalcon-basedir helm-phalcon-views) "|" "grep" "/"))
+	(error "Failed: Can't get views list candidates"))
+      (goto-char (point-min))
+      (while (not (eobp))
+	(push (helm-phalcon--line-string) paths)
+	(forward-line 1))
       (reverse paths))))
 
 (defun helm-phalcon--source (repo)
