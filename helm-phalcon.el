@@ -51,14 +51,17 @@
   "Helm list candidates."
   (with-temp-buffer
     (let ((paths))
-      (push (concat helm-phalcon-basedir "app/models/entities") paths)
-      (push (concat helm-phalcon-basedir "app/models/repositories/Repository") paths)
-      (push (concat helm-phalcon-basedir "app/models/services/Service") paths)
-      (push (concat helm-phalcon-basedir "app/messages") paths)
-      (push (concat helm-phalcon-basedir "app/config") paths)
       (push (concat helm-phalcon-basedir "app/modules/frontend/controllers") paths)
       (push (concat helm-phalcon-basedir "app/modules/frontend/controllers/Admin") paths)
+      (push (concat helm-phalcon-basedir "app/models/services/Service") paths)
+      (push (concat helm-phalcon-basedir "app/models/repositories/Repository") paths)
+      (push (concat helm-phalcon-basedir "app/models/entities") paths)
+      (push (concat phalcon-basedir "app/models/criterias") paths)
+      (push (concat helm-phalcon-basedir "app/messages") paths)
       (push (concat helm-phalcon-basedir "app/utils/Forms") paths)
+      (push (concat helm-phalcon-basedir "app/config") paths)
+      (push (concat helm-phalcon-basedir "app/util") paths)
+      (push (directory-file-name (concat helm-phalcon-basedir "app/modules/frontend/views")) paths)
       (reverse paths))))
 
 (defun helm-phalcon--source (repo)
