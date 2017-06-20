@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.1
+;; Version: 0.2
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -59,7 +59,6 @@
       (push (concat helm-phalcon-basedir "app/modules/frontend/controllers") paths)
       (push (concat helm-phalcon-basedir "app/modules/frontend/controllers/Admin") paths)
       (push (concat helm-phalcon-basedir "app/utils/Forms") paths)
-      (push (list-directory (concat helm-phalcon-basedir "app/modules/frontend/views")) paths)
       (reverse paths))))
 
 (defun helm-phalcon--source (repo)
@@ -72,7 +71,7 @@
 (defun helm-phalcon--ls-files ()
   "Helm ls."
   (with-current-buffer (helm-candidate-buffer 'global)
-    (unless (zerop (apply #'call-process ls nil '(t nil) nil))
+    (unless (zerop (apply #'call-process "ls" nil '(t nil) nil))
       (error "Failed: Can't get file list candidates"))))
 
 ;;;###autoload
