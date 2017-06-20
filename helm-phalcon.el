@@ -31,7 +31,7 @@
 (require 'helm-files)
 
 (defgroup helm-phalcon nil
-  "phalcon complete with helm interface."
+  "Phalcon complete with helm interface."
   :group 'helm)
 
 (defcustom helm-phalcon-basedir nil
@@ -65,14 +65,14 @@
       (reverse paths))))
 
 (defun helm-phalcon--source (repo)
-  "Helm source as REPO."
+  "Helm phalcon helm source as REPO."
   (let ((name (file-name-nondirectory (directory-file-name repo))))
     (helm-build-in-buffer-source name
       :init #'helm-phalcon--ls-files
       :action helm-phalcon--action)))
 
 (defun helm-phalcon--ls-files ()
-  "Helm ls."
+  "Helm phalcon file list candidates."
   (with-current-buffer (helm-candidate-buffer 'global)
     (unless (zerop (apply #'call-process "ls" nil '(t nil) nil))
       (error "Failed: Can't get file list candidates"))))
