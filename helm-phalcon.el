@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.3.1
+;; Version: 0.4.2
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -114,26 +114,29 @@
 
 (defun helm-phalcon--list-candidates ()
   "Helm list candidates."
-  (with-temp-buffer
-    (let ((paths))
-      (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-admincontrollers) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
-      (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
-      (unless (zerop (apply #'call-process "ls" nil t nil (concat helm-phalcon-basedir helm-phalcon-views) "|" "grep" "/"))
-	(error "Failed: Can't get views list candidates"))
-      (goto-char (point-min))
-      (while (not (eobp))
-	(push (helm-phalcon--line-string) paths)
-	(forward-line 1))
-      (reverse paths))))
+  (let ((paths))
+    (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-admincontrollers) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
+    (with-temp-buffer
+      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-views "/*/") nil t)))
+	(unless (zerop ret)
+	  (error "Failed ls"))
+	(goto-char (point-min))
+	(while (not (eobp))
+	  (let ((line (buffer-substring-no-properties
+		       (line-beginning-position) (line-end-position))))
+	    (push line paths))
+	  (forward-line 1))
+	(reverse paths)))))
 
 (defun helm-phalcon--source (repo)
   "Helm phalcon helm source as REPO."
