@@ -39,6 +39,61 @@
   :group 'helm-phalcon
   :type 'string)
 
+(defcustom helm-phalcon-controllers nil
+  "Phalcon contraller directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-admincontrollers nil
+  "Phalcon admin contraller directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-services nil
+  "Phalcon services directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-repositories nil
+  "Phalcon repositories directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-entities nil
+  "Phalcon entities directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-criterias nil
+  "Phalcon criterias directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-messages nil
+  "Phalcon messages directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-forms nil
+  "Phalcon forms directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-views nil
+  "Phalcon views directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-config nil
+  "Phalcon config directory."
+  :group 'helm-phalcon
+  :type 'string)
+
+(defcustom helm-phalcon-util nil
+  "Phalcon util directory."
+  :group 'helm-phalcon
+  :type 'string)
+
 (defun helm-phalcon--open-dired (file)
   "Open file with dired as FILE."
   (dired (file-name-directory file)))
@@ -51,17 +106,17 @@
   "Helm list candidates."
   (with-temp-buffer
     (let ((paths))
-      (push (concat helm-phalcon-basedir "app/modules/frontend/controllers") paths)
-      (push (concat helm-phalcon-basedir "app/modules/frontend/controllers/Admin") paths)
-      (push (concat helm-phalcon-basedir "app/models/services/Service") paths)
-      (push (concat helm-phalcon-basedir "app/models/repositories/Repository") paths)
-      (push (concat helm-phalcon-basedir "app/models/entities") paths)
-      (push (concat phalcon-basedir "app/models/criterias") paths)
-      (push (concat helm-phalcon-basedir "app/messages") paths)
-      (push (concat helm-phalcon-basedir "app/utils/Forms") paths)
-      (push (concat helm-phalcon-basedir "app/config") paths)
-      (push (concat helm-phalcon-basedir "app/util") paths)
-      (push (directory-file-name (concat helm-phalcon-basedir "app/modules/frontend/views")) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-admincontrollers) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
+      (push (concat phalcon-basedir helm-phalcon-criterias) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
+      (push (directory-file-name (concat helm-phalcon-basedir helm-phalcon-views)) paths)
       (reverse paths))))
 
 (defun helm-phalcon--source (repo)
