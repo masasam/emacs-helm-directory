@@ -94,6 +94,11 @@
   :group 'helm-phalcon
   :type 'string)
 
+(defcustom helm-phalcon-public nil
+  "Phalcon public directory."
+  :group 'helm-phalcon
+  :type 'string)
+
 (defun helm-phalcon--open-dired (file)
   "Open file with dired as FILE."
   (dired (file-name-directory file)))
@@ -111,11 +116,12 @@
       (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
-      (push (concat phalcon-basedir helm-phalcon-criterias) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
       (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
+      (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
       (push (directory-file-name (concat helm-phalcon-basedir helm-phalcon-views)) paths)
       (reverse paths))))
 
