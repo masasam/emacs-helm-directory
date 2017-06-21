@@ -74,6 +74,11 @@
   :group 'helm-phalcon
   :type 'string)
 
+(defcustom helm-phalcon-adminmessages nil
+  "Phalcon admin messages directory."
+  :group 'helm-phalcon
+  :type 'string)
+
 (defcustom helm-phalcon-forms nil
   "Phalcon forms directory."
   :group 'helm-phalcon
@@ -122,6 +127,7 @@
     (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-adminmessages) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
