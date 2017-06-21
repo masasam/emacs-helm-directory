@@ -22,3 +22,4 @@ phalcon complete with helm interface
 	(setq helm-phalcon-views "app/modules/frontend/views")
 	(setq helm-phalcon-config "app/config")
 	(setq helm-phalcon-util "app/util")
+	(setq helm-phalcon-public "public")
