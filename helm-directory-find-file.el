@@ -87,9 +87,9 @@
 (defun helm-directory-find-file ()
   "Selecting directory before select the file."
   (interactive)
-  (let ((repo (helm-comp-read "directory-list: "
+  (let ((repo (helm-comp-read "Directory: "
                               (helm-directory-find-file--list-candidates)
-                              :name "directory list"
+                              :name "Directory"
                               :must-match t)))
     (let ((default-directory (file-name-as-directory repo)))
       (helm :sources (list (helm-directory-find-file--source default-directory))
@@ -109,7 +109,7 @@
     resultlist))
 
 (defvar helm-directory-find-file-change-list--source
-  (helm-build-sync-source "Change basedirectory"
+  (helm-build-sync-source "Change helm-directory-find-file base directory"
     :candidates #'helm-directory-find-file-basedir-set
     :volatile t
     :action (helm-make-actions
