@@ -1,6 +1,6 @@
-# helm-phalcon
+# helm-directory-find-file
 
-phalcon complete with helm interface
+Select directory with helm and select the file in this directory with helm.
 
 ## Requirements
 
@@ -9,17 +9,6 @@ phalcon complete with helm interface
 
 ## Sample Configuration
 
-	(define-key global-map (kbd "C-c l") 'helm-phalcon)
-	(define-key global-map (kbd "C-c C-l") 'helm-phalcon)
-	(setq helm-phalcon-basedir "/home/masa/src/github.com/phalcon-project/")
-	(setq helm-phalcon-controllers "app/modules/frontend/controllers")
-	(setq helm-phalcon-services "app/models/services/Service")
-	(setq helm-phalcon-repositories "app/models/repositories/Repository")
-	(setq helm-phalcon-entities "app/models/entities")
-	(setq helm-phalcon-criterias "app/models/criterias")
-	(setq helm-phalcon-messages "app/messages")
-	(setq helm-phalcon-forms "app/utils/Forms")
-	(setq helm-phalcon-views "app/modules/frontend/views")
-	(setq helm-phalcon-config "app/config")
-	(setq helm-phalcon-util "app/utils")
-	(setq helm-phalcon-public "public")
+	(define-key global-map (kbd "C-c l") 'helm-directory-find-file)
+	(define-key global-map (kbd "C-c C-l") 'helm-directory-find-file)
+	(setq helm-directory-find-file-basedir "/home/masa/src/github.com/phalcon-project/")

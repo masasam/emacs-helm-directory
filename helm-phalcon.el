@@ -39,78 +39,9 @@
   :group 'helm-phalcon
   :type 'string)
 
-(defcustom helm-phalcon-controllers nil
-  "Phalcon controllers directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-services nil
-  "Phalcon services directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-repositories nil
-  "Phalcon repositories directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-entities nil
-  "Phalcon entities directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-criterias nil
-  "Phalcon criterias directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-messages nil
-  "Phalcon messages directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-forms nil
-  "Phalcon forms directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-views nil
-  "Phalcon views directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-config nil
-  "Phalcon config directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-util nil
-  "Phalcon util directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-public nil
-  "Phalcon public directory."
-  :group 'helm-phalcon
-  :type 'string)
-
 (defvar helm-phalcon--action
   '(("Open File" . find-file)
     ("Open Directory" . helm-phalcon--open-dired)))
-
-(defmacro helm-phalcon-recursive-directory (&rest body)
-  "Recursive directory list in directory of BODY."
-  `(with-temp-buffer
-     (let ((ret (call-process-shell-command (concat "find " helm-phalcon-basedir ,@body " -type d") nil t)))
-       (unless (zerop ret)
-	 (error "Failed find"))
-       (goto-char (point-min))
-       (while (not (eobp))
-	 (let ((line (buffer-substring-no-properties
-		      (line-beginning-position) (line-end-position))))
-	   (push line paths))
-	 (forward-line 1))
-       (reverse paths))))
 
 (defmacro helm-phalcon--line-string ()
   "Obtain part of the character of the buffer without text attributes."
@@ -124,17 +55,16 @@
 (defun helm-phalcon--list-candidates ()
   "Helm phalcon list candidates."
   (let ((paths))
-    (helm-phalcon-recursive-directory helm-phalcon-controllers)
-    (helm-phalcon-recursive-directory helm-phalcon-services)
-    (helm-phalcon-recursive-directory helm-phalcon-repositories)
-    (helm-phalcon-recursive-directory helm-phalcon-entities)
-    (helm-phalcon-recursive-directory helm-phalcon-views)
-    (helm-phalcon-recursive-directory helm-phalcon-messages)
-    (helm-phalcon-recursive-directory helm-phalcon-criterias)
-    (helm-phalcon-recursive-directory helm-phalcon-forms)
-    (helm-phalcon-recursive-directory helm-phalcon-config)
-    (helm-phalcon-recursive-directory helm-phalcon-util)
-    (helm-phalcon-recursive-directory helm-phalcon-public)))
+    (when (file-exists-p (expand-file-name helm-phalcon-basedir))
+      (with-temp-buffer
+	(let ((ret (call-process-shell-command (concat "find " helm-phalcon-basedir " -type d") nil t)))
+	  (goto-char (point-min))
+	  (while (not (eobp))
+	    (let ((line (buffer-substring-no-properties
+			 (line-beginning-position) (line-end-position))))
+	      (push line paths))
+	    (forward-line 1))
+	  (reverse paths))))))
 
 (defun helm-phalcon--source (repo)
   "Helm phalcon helm source as REPO."
