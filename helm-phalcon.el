@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.5.3
+;; Version: 0.6.3
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -98,8 +98,23 @@
   '(("Open File" . find-file)
     ("Open Directory" . helm-phalcon--open-dired)))
 
+(defmacro helm-phalcon-recursive-directory (&rest body)
+  "Recursive directory list in directory of BODY."
+  `(progn
+     (with-temp-buffer
+       (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir ,@body "/*/") nil t)))
+	 (unless (zerop ret)
+	   (error "Failed ls"))
+	 (goto-char (point-min))
+	 (while (not (eobp))
+	   (let ((line (buffer-substring-no-properties
+			(line-beginning-position) (line-end-position))))
+	     (push line paths))
+	   (forward-line 1))
+	 (reverse paths)))))
+
 (defmacro helm-phalcon--line-string ()
-  "Helm phalcon macro."
+  "Obtain part of the character of the buffer without text attributes."
   `(buffer-substring-no-properties
     (line-beginning-position) (line-end-position)))
 
@@ -111,49 +126,27 @@
   "Helm phalcon list candidates."
   (let ((paths))
     (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
-    (with-temp-buffer
-      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-controllers "/*/") nil t)))
-	(unless (zerop ret)
-	  (error "Failed ls"))
-	(goto-char (point-min))
-	(while (not (eobp))
-	  (let ((line (buffer-substring-no-properties
-		       (line-beginning-position) (line-end-position))))
-	    (push line paths))
-	  (forward-line 1))
-	(reverse paths)))
+    (helm-phalcon-recursive-directory helm-phalcon-controllers)
     (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-services)
     (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-repositories)
     (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-entities)
     (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-criterias)
     (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
-    (with-temp-buffer
-      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-messages "/*/") nil t)))
-	(unless (zerop ret)
-	  (error "Failed ls"))
-	(goto-char (point-min))
-	(while (not (eobp))
-	  (let ((line (buffer-substring-no-properties
-		       (line-beginning-position) (line-end-position))))
-	    (push line paths))
-	  (forward-line 1))
-	(reverse paths)))
+    (helm-phalcon-recursive-directory helm-phalcon-messages)
     (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-forms)
     (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-config)
     (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-util)
     (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-public)
     (push (concat helm-phalcon-basedir helm-phalcon-views) paths)
-    (with-temp-buffer
-      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-views "/*/") nil t)))
-	(unless (zerop ret)
-	  (error "Failed ls"))
-	(goto-char (point-min))
-	(while (not (eobp))
-	  (let ((line (buffer-substring-no-properties
-		       (line-beginning-position) (line-end-position))))
-	    (push line paths))
-	  (forward-line 1))
-	(reverse paths)))))
+    (helm-phalcon-recursive-directory helm-phalcon-views)))
 
 (defun helm-phalcon--source (repo)
   "Helm phalcon helm source as REPO."
