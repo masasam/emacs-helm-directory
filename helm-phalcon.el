@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.5.2
+;; Version: 0.5.3
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -35,12 +35,12 @@
   :group 'helm)
 
 (defcustom helm-phalcon-basedir nil
-  "Directory where Phalcon Framework is placed."
+  "Directory where phalcon framework is placed."
   :group 'helm-phalcon
   :type 'string)
 
 (defcustom helm-phalcon-controllers nil
-  "Phalcon contraller directory."
+  "Phalcon controllers directory."
   :group 'helm-phalcon
   :type 'string)
 
@@ -108,7 +108,7 @@
   (dired (file-name-directory file)))
 
 (defun helm-phalcon--list-candidates ()
-  "Helm list candidates."
+  "Helm phalcon list candidates."
   (let ((paths))
     (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
     (with-temp-buffer
