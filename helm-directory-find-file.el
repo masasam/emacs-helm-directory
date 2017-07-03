@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-directory-find-file
-;; Version: 0.6.3
+;; Version: 0.6.4
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -99,9 +99,18 @@
   "Setq helm-directory-find-file-basedir with PATH."
   (setq helm-directory-find-file-basedir path))
 
+(defun helm-directory-find-file-basedir-set ()
+  "Setq helm-directory-find-file-basedir."
+  (let ((resultlist)
+	(basedir-list helm-directory-find-file-basedir-list))
+    (while basedir-list
+      (push (car basedir-list) resultlist)
+      (pop basedir-list))
+    resultlist))
+
 (defvar helm-directory-find-file-change-list--source
   (helm-build-sync-source "Change basedirectory"
-    :candidates #'helm-directory-find-file-basedir-list
+    :candidates #'helm-directory-find-file-basedir-set
     :volatile t
     :action (helm-make-actions
              "Change directory" #'helm-directory-find-file-change-open)))
