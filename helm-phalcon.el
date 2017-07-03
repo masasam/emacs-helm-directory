@@ -101,9 +101,9 @@
 (defmacro helm-phalcon-recursive-directory (&rest body)
   "Recursive directory list in directory of BODY."
   `(with-temp-buffer
-     (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir ,@body "/*/") nil t)))
+     (let ((ret (call-process-shell-command (concat "find " helm-phalcon-basedir ,@body " -type d") nil t)))
        (unless (zerop ret)
-	 (error "Failed ls"))
+	 (error "Failed find"))
        (goto-char (point-min))
        (while (not (eobp))
 	 (let ((line (buffer-substring-no-properties
@@ -124,28 +124,17 @@
 (defun helm-phalcon--list-candidates ()
   "Helm phalcon list candidates."
   (let ((paths))
-    (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
     (helm-phalcon-recursive-directory helm-phalcon-controllers)
-    (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
     (helm-phalcon-recursive-directory helm-phalcon-services)
-    (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
     (helm-phalcon-recursive-directory helm-phalcon-repositories)
-    (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
     (helm-phalcon-recursive-directory helm-phalcon-entities)
-    (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
-    (helm-phalcon-recursive-directory helm-phalcon-criterias)
-    (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-views)
     (helm-phalcon-recursive-directory helm-phalcon-messages)
-    (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
+    (helm-phalcon-recursive-directory helm-phalcon-criterias)
     (helm-phalcon-recursive-directory helm-phalcon-forms)
-    (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
     (helm-phalcon-recursive-directory helm-phalcon-config)
-    (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
     (helm-phalcon-recursive-directory helm-phalcon-util)
-    (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
-    (helm-phalcon-recursive-directory helm-phalcon-public)
-    (push (concat helm-phalcon-basedir helm-phalcon-views) paths)
-    (helm-phalcon-recursive-directory helm-phalcon-views)))
+    (helm-phalcon-recursive-directory helm-phalcon-public)))
 
 (defun helm-phalcon--source (repo)
   "Helm phalcon helm source as REPO."
