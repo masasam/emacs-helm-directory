@@ -117,7 +117,7 @@
 
 ;;;###autoload
 (defun helm-directory-find-file-change ()
-  "Open your ~/."
+  "Change helm-directory-find-file-basedir with helm interface."
   (interactive)
   (helm :sources '(helm-directory-find-file-change-list--source) :buffer "*helm-directory-find-file-change*"))
 
