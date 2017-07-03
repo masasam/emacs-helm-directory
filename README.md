@@ -10,6 +10,10 @@ This package provide it.
 
 When you select a directory with helm, the file in that directory can be used with helm.
 
+	M-x helm-directory-find-file-change
+
+Chenge helm-directory-find-file-basedir with helm interface.
+
 ## Requirements
 
 - Emacs 24.3 or higher
