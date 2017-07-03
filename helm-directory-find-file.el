@@ -43,14 +43,14 @@
   :group 'helm-directory-find-file
   :type 'string)
 
+(defcustom helm-directory-find-file-basedir-list nil
+  "List of search this directory."
+  :group 'helm-directory-find-file
+  :type 'string)
+
 (defvar helm-directory-find-file--action
   '(("Open File" . find-file)
     ("Open Directory" . helm-directory-find-file--open-dired)))
-
-(defmacro helm-directory-find-file--line-string ()
-  "Obtain part of the character of the buffer without text attributes."
-  `(buffer-substring-no-properties
-    (line-beginning-position) (line-end-position)))
 
 (defun helm-directory-find-file--open-dired (file)
   "Open file with dired as FILE."
@@ -94,6 +94,23 @@
     (let ((default-directory (file-name-as-directory repo)))
       (helm :sources (list (helm-directory-find-file--source default-directory))
             :buffer "*helm-directory-find-file-list*"))))
+
+(defun helm-directory-find-file-change-open (path)
+  "Setq helm-directory-find-file-basedir with PATH."
+  (setq helm-directory-find-file-basedir path))
+
+(defvar helm-directory-find-file-change-list--source
+  (helm-build-sync-source "Change basedirectory"
+    :candidates #'helm-directory-find-file-basedir-list
+    :volatile t
+    :action (helm-make-actions
+             "Change directory" #'helm-directory-find-file-change-open)))
+
+;;;###autoload
+(defun helm-directory-find-file-change ()
+  "Open your ~/."
+  (interactive)
+  (helm :sources '(helm-directory-find-file-change-list--source) :buffer "*helm-directory-find-file-change*"))
 
 (provide 'helm-directory-find-file)
 
