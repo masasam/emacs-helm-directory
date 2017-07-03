@@ -4,7 +4,7 @@
 
 ;; Author: Masashı Mıyaura
 ;; URL: https://github.com/masasam/emacs-helm-phalcon
-;; Version: 0.4.2
+;; Version: 0.5.2
 ;; Package-Requires: ((emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -44,11 +44,6 @@
   :group 'helm-phalcon
   :type 'string)
 
-(defcustom helm-phalcon-admincontrollers nil
-  "Phalcon admin contraller directory."
-  :group 'helm-phalcon
-  :type 'string)
-
 (defcustom helm-phalcon-services nil
   "Phalcon services directory."
   :group 'helm-phalcon
@@ -71,11 +66,6 @@
 
 (defcustom helm-phalcon-messages nil
   "Phalcon messages directory."
-  :group 'helm-phalcon
-  :type 'string)
-
-(defcustom helm-phalcon-adminmessages nil
-  "Phalcon admin messages directory."
   :group 'helm-phalcon
   :type 'string)
 
@@ -121,17 +111,38 @@
   "Helm list candidates."
   (let ((paths))
     (push (concat helm-phalcon-basedir helm-phalcon-controllers) paths)
-    (push (concat helm-phalcon-basedir helm-phalcon-admincontrollers) paths)
+    (with-temp-buffer
+      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-controllers "/*/") nil t)))
+	(unless (zerop ret)
+	  (error "Failed ls"))
+	(goto-char (point-min))
+	(while (not (eobp))
+	  (let ((line (buffer-substring-no-properties
+		       (line-beginning-position) (line-end-position))))
+	    (push line paths))
+	  (forward-line 1))
+	(reverse paths)))
     (push (concat helm-phalcon-basedir helm-phalcon-services) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-repositories) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-entities) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-criterias) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-messages) paths)
-    (push (concat helm-phalcon-basedir helm-phalcon-adminmessages) paths)
+    (with-temp-buffer
+      (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-messages "/*/") nil t)))
+	(unless (zerop ret)
+	  (error "Failed ls"))
+	(goto-char (point-min))
+	(while (not (eobp))
+	  (let ((line (buffer-substring-no-properties
+		       (line-beginning-position) (line-end-position))))
+	    (push line paths))
+	  (forward-line 1))
+	(reverse paths)))
     (push (concat helm-phalcon-basedir helm-phalcon-forms) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-config) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-util) paths)
     (push (concat helm-phalcon-basedir helm-phalcon-public) paths)
+    (push (concat helm-phalcon-basedir helm-phalcon-views) paths)
     (with-temp-buffer
       (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir helm-phalcon-views "/*/") nil t)))
 	(unless (zerop ret)
