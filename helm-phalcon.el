@@ -100,18 +100,17 @@
 
 (defmacro helm-phalcon-recursive-directory (&rest body)
   "Recursive directory list in directory of BODY."
-  `(progn
-     (with-temp-buffer
-       (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir ,@body "/*/") nil t)))
-	 (unless (zerop ret)
-	   (error "Failed ls"))
-	 (goto-char (point-min))
-	 (while (not (eobp))
-	   (let ((line (buffer-substring-no-properties
-			(line-beginning-position) (line-end-position))))
-	     (push line paths))
-	   (forward-line 1))
-	 (reverse paths)))))
+  `(with-temp-buffer
+     (let ((ret (call-process-shell-command (concat "ls -d " helm-phalcon-basedir ,@body "/*/") nil t)))
+       (unless (zerop ret)
+	 (error "Failed ls"))
+       (goto-char (point-min))
+       (while (not (eobp))
+	 (let ((line (buffer-substring-no-properties
+		      (line-beginning-position) (line-end-position))))
+	   (push line paths))
+	 (forward-line 1))
+       (reverse paths))))
 
 (defmacro helm-phalcon--line-string ()
   "Obtain part of the character of the buffer without text attributes."
