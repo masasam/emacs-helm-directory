@@ -106,7 +106,7 @@
     (while basedir-list
       (push (car basedir-list) resultlist)
       (pop basedir-list))
-    resultlist))
+    (reverse resultlist)))
 
 (defvar helm-directory-change-list--source
   (helm-build-sync-source "Change helm-directory-basedir"
