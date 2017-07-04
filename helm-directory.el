@@ -96,11 +96,11 @@
             :buffer "*helm-directory-list*"))))
 
 (defun helm-directory-change-open (path)
-  "Set helm-directory-basedir with PATH."
+  "Set `helm-directory-basedir' with PATH."
   (setq helm-directory-basedir path))
 
 (defun helm-directory-basedir-set ()
-  "Set helm-directory-basedir."
+  "Set `helm-directory-basedir'."
   (let ((resultlist)
 	(basedir-list helm-directory-basedir-list))
     (while basedir-list
@@ -117,7 +117,7 @@
 
 ;;;###autoload
 (defun helm-directory-change ()
-  "Change helm-directory-basedir with helm interface."
+  "Change `helm-directory-basedir' with helm interface."
   (interactive)
   (helm :sources '(helm-directory-change-list--source) :buffer "*helm-directory-change*"))
 
