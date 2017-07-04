@@ -109,7 +109,7 @@
     resultlist))
 
 (defvar helm-directory-change-list--source
-  (helm-build-sync-source "Change helm-directory base directory"
+  (helm-build-sync-source "Change helm-directory-basedir"
     :candidates #'helm-directory-basedir-set
     :volatile t
     :action (helm-make-actions
