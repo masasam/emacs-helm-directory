@@ -96,11 +96,11 @@
             :buffer "*helm-directory-list*"))))
 
 (defun helm-directory-change-open (path)
-  "Setq helm-directory-basedir with PATH."
+  "Set helm-directory-basedir with PATH."
   (setq helm-directory-basedir path))
 
 (defun helm-directory-basedir-set ()
-  "Setq helm-directory-basedir."
+  "Set helm-directory-basedir."
   (let ((resultlist)
 	(basedir-list helm-directory-basedir-list))
     (while basedir-list
