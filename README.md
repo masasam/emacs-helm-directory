@@ -24,7 +24,13 @@ When you select a directory with helm,
 
 	M-x helm-directory-change
 
+![screencast](image/helm-directory3.png)
+
 Select helm-directory-basedir from helm-directory-basedir-list with helm interface.
+
+Helm-directory searches directories of helm-directory-basedir.
+
+Since it is too late when there are too many files, so we will deal with it by switching the search target.
 
 ## Requirements
 
