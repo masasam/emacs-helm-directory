@@ -30,8 +30,8 @@ Chenge helm-directory-find-file-basedir with helm interface.
 
 	(define-key global-map (kbd "C-c l") 'helm-directory-find-file)
 	(define-key global-map (kbd "C-c C-l") 'helm-directory-find-file)
-	(setq helm-directory-find-file-basedir "~/src/github.com/project/")
-	(setq helm-directory-find-file-basedir-list '("~/src/github.com/project/" "~/Dropbox" "~/Documents"))
+	(setq helm-directory-find-file-basedir "~/src/github.com/projectA/")
+	(setq helm-directory-find-file-basedir-list '("~/src/github.com/projectA/" "~/src/github.com/projectB/" "~/src/github.com/projectC/" "~/Dropbox" "~/Documents"))
 
 helm-directory-find-file-basedir "Complemented under this directory by default".
 
