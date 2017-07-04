@@ -14,9 +14,11 @@ This package provide it.
 
 	M-x helm-directory-find-file
 
-When you select a directory with helm, the file in that directory can be used with helm.
+When you select a directory with helm,
 
 ![screencast](image/helm-directory1.png)
+
+ the file in that directory can be used with helm.
 
 ![screencast](image/helm-directory2.png)
 
