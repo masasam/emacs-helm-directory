@@ -16,6 +16,10 @@ This package provide it.
 
 When you select a directory with helm, the file in that directory can be used with helm.
 
+![screencast](image/helm-directory1.png)
+
+![screencast](image/helm-directory2.png)
+
 	M-x helm-directory-find-file-change
 
 Chenge helm-directory-find-file-basedir with helm interface.
