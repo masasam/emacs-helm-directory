@@ -24,7 +24,7 @@ When you select a directory with helm,
 
 	M-x helm-directory-find-file-change
 
-Chenge helm-directory-find-file-basedir with helm interface.
+Select helm-directory-find-file-basedir from helm-directory-find-file-basedir-list with helm interface.
 
 ## Requirements
 
