@@ -2,6 +2,10 @@
 
 Select directory with helm and select the file in this directory with helm interface.
 
+## Screencast
+
+![screencast](image/screencast.gif)
+
 Since the directory has important meanings at the framework,
 
 I want to complement with helm only the files that is in the meaningful directory.
@@ -32,3 +36,8 @@ Chenge helm-directory-find-file-basedir with helm interface.
 helm-directory-find-file-basedir "Complemented under this directory by default".
 
 helm-directory-find-file-basedir-list "Switch based helm-directory-find-file-basedir on this list with M-x helm-directory-find-file-change"
+
+[melpa-link]: http://melpa.org/#/helm-directory-find-file
+[melpa-badge]: http://melpa.org/packages/helm-directory-find-file-badge.svg
+[melpa-stable-link]: http://stable.melpa.org/#/helm-directory-find-file
+[melpa-stable-badge]: http://stable.melpa.org/packages/helm-directory-find-file-badge.svg
