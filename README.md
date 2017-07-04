@@ -1,4 +1,4 @@
-# helm-directory-find-file
+# helm-directory
 
 Select directory with helm and select the file in this directory with helm interface.
 
@@ -12,7 +12,7 @@ I want to complement with helm only the files that is in the meaningful director
 
 This package provide it.
 
-	M-x helm-directory-find-file
+	M-x helm-directory
 
 When you select a directory with helm,
 
@@ -22,9 +22,9 @@ When you select a directory with helm,
 
 ![screencast](image/helm-directory2.png)
 
-	M-x helm-directory-find-file-change
+	M-x helm-directory-change
 
-Select helm-directory-find-file-basedir from helm-directory-find-file-basedir-list with helm interface.
+Select helm-directory-basedir from helm-directory-basedir-list with helm interface.
 
 ## Requirements
 
@@ -34,16 +34,16 @@ Select helm-directory-find-file-basedir from helm-directory-find-file-basedir-li
 
 ## Sample Configuration
 
-	(define-key global-map (kbd "C-c l") 'helm-directory-find-file)
-	(define-key global-map (kbd "C-c C-l") 'helm-directory-find-file)
-	(setq helm-directory-find-file-basedir "~/src/github.com/projectA/")
-	(setq helm-directory-find-file-basedir-list '("~/src/github.com/projectA/" "~/src/github.com/projectB/" "~/Dropbox"))
+	(define-key global-map (kbd "C-c l") 'helm-directory)
+	(define-key global-map (kbd "C-c C-l") 'helm-directory)
+	(setq helm-directory-basedir "~/src/github.com/projectA/")
+	(setq helm-directory-basedir-list '("~/src/github.com/projectA/" "~/src/github.com/projectB/" "~/Dropbox"))
 
-helm-directory-find-file-basedir "Complemented under this directory by default".
+helm-directory-basedir "Complemented under this directory by default".
 
-helm-directory-find-file-basedir-list "Switch based helm-directory-find-file-basedir on this list with M-x helm-directory-find-file-change"
+helm-directory-basedir-list "Switch based helm-directory-basedir on this list with M-x helm-directory-change"
 
-[melpa-link]: http://melpa.org/#/helm-directory-find-file
-[melpa-badge]: http://melpa.org/packages/helm-directory-find-file-badge.svg
-[melpa-stable-link]: http://stable.melpa.org/#/helm-directory-find-file
-[melpa-stable-badge]: http://stable.melpa.org/packages/helm-directory-find-file-badge.svg
+[melpa-link]: http://melpa.org/#/helm-directory
+[melpa-badge]: http://melpa.org/packages/helm-directory-badge.svg
+[melpa-stable-link]: http://stable.melpa.org/#/helm-directory
+[melpa-stable-badge]: http://stable.melpa.org/packages/helm-directory-badge.svg

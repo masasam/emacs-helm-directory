@@ -1,9 +1,9 @@
-;;; helm-directory-find-file.el --- selecting directory before select the file -*- lexical-binding: t; -*-
+;;; helm-directory.el --- selecting directory before select the file -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017 by Masashı Mıyaura
 
 ;; Author: Masashı Mıyaura
-;; URL: https://github.com/masasam/emacs-helm-directory-find-file
+;; URL: https://github.com/masasam/emacs-helm-directory
 ;; Version: 0.6.4
 ;; Package-Requires: ((emacs "24.4"))
 
@@ -34,34 +34,34 @@
 (require 'helm-mode)
 (require 'helm-files)
 
-(defgroup helm-directory-find-file nil
+(defgroup helm-directory nil
   "Selecting directory before select the file."
   :group 'helm)
 
-(defcustom helm-directory-find-file-basedir nil
+(defcustom helm-directory-basedir nil
   "Search this directory."
-  :group 'helm-directory-find-file
+  :group 'helm-directory
   :type 'string)
 
-(defcustom helm-directory-find-file-basedir-list nil
+(defcustom helm-directory-basedir-list nil
   "List of search this directory."
-  :group 'helm-directory-find-file
+  :group 'helm-directory
   :type 'string)
 
-(defvar helm-directory-find-file--action
+(defvar helm-directory--action
   '(("Open File" . find-file)
-    ("Open Directory" . helm-directory-find-file--open-dired)))
+    ("Open Directory" . helm-directory--open-dired)))
 
-(defun helm-directory-find-file--open-dired (file)
+(defun helm-directory--open-dired (file)
   "Open file with dired as FILE."
   (dired (file-name-directory file)))
 
-(defun helm-directory-find-file--list-candidates ()
-  "Helm-directory-find-file list candidates."
+(defun helm-directory--list-candidates ()
+  "Helm-directory list candidates."
   (let ((paths))
-    (when (file-exists-p (expand-file-name helm-directory-find-file-basedir))
+    (when (file-exists-p (expand-file-name helm-directory-basedir))
       (with-temp-buffer
-	(let ((ret (call-process-shell-command (concat "find " helm-directory-find-file-basedir " -type d") nil t)))
+	(let ((ret (call-process-shell-command (concat "find " helm-directory-basedir " -type d") nil t)))
 	  (goto-char (point-min))
 	  (while (not (eobp))
 	    (let ((line (buffer-substring-no-properties
@@ -70,57 +70,57 @@
 	    (forward-line 1))
 	  (reverse paths))))))
 
-(defun helm-directory-find-file--source (repo)
-  "Helm-directory-find-file source as REPO."
+(defun helm-directory--source (repo)
+  "Helm-directory source as REPO."
   (let ((name (file-name-nondirectory (directory-file-name repo))))
     (helm-build-in-buffer-source name
-      :init #'helm-directory-find-file--ls-files
-      :action helm-directory-find-file--action)))
+      :init #'helm-directory--ls-files
+      :action helm-directory--action)))
 
-(defun helm-directory-find-file--ls-files ()
-  "Helm-directory-find-file list candidates."
+(defun helm-directory--ls-files ()
+  "Helm-directory list candidates."
   (with-current-buffer (helm-candidate-buffer 'global)
     (unless (zerop (apply #'call-process "ls" nil '(t nil) nil))
       (error "Failed: Can't get file list candidates"))))
 
 ;;;###autoload
-(defun helm-directory-find-file ()
+(defun helm-directory ()
   "Selecting directory before select the file."
   (interactive)
   (let ((repo (helm-comp-read "Directory: "
-                              (helm-directory-find-file--list-candidates)
+                              (helm-directory--list-candidates)
                               :name "Directory"
                               :must-match t)))
     (let ((default-directory (file-name-as-directory repo)))
-      (helm :sources (list (helm-directory-find-file--source default-directory))
-            :buffer "*helm-directory-find-file-list*"))))
+      (helm :sources (list (helm-directory--source default-directory))
+            :buffer "*helm-directory-list*"))))
 
-(defun helm-directory-find-file-change-open (path)
-  "Setq helm-directory-find-file-basedir with PATH."
-  (setq helm-directory-find-file-basedir path))
+(defun helm-directory-change-open (path)
+  "Setq helm-directory-basedir with PATH."
+  (setq helm-directory-basedir path))
 
-(defun helm-directory-find-file-basedir-set ()
-  "Setq helm-directory-find-file-basedir."
+(defun helm-directory-basedir-set ()
+  "Setq helm-directory-basedir."
   (let ((resultlist)
-	(basedir-list helm-directory-find-file-basedir-list))
+	(basedir-list helm-directory-basedir-list))
     (while basedir-list
       (push (car basedir-list) resultlist)
       (pop basedir-list))
     resultlist))
 
-(defvar helm-directory-find-file-change-list--source
-  (helm-build-sync-source "Change helm-directory-find-file base directory"
-    :candidates #'helm-directory-find-file-basedir-set
+(defvar helm-directory-change-list--source
+  (helm-build-sync-source "Change helm-directory base directory"
+    :candidates #'helm-directory-basedir-set
     :volatile t
     :action (helm-make-actions
-             "Change directory" #'helm-directory-find-file-change-open)))
+             "Change directory" #'helm-directory-change-open)))
 
 ;;;###autoload
-(defun helm-directory-find-file-change ()
-  "Change helm-directory-find-file-basedir with helm interface."
+(defun helm-directory-change ()
+  "Change helm-directory-basedir with helm interface."
   (interactive)
-  (helm :sources '(helm-directory-find-file-change-list--source) :buffer "*helm-directory-find-file-change*"))
+  (helm :sources '(helm-directory-change-list--source) :buffer "*helm-directory-change*"))
 
-(provide 'helm-directory-find-file)
+(provide 'helm-directory)
 
-;;; helm-directory-find-file.el ends here
+;;; helm-directory.el ends here
