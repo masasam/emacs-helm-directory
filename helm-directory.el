@@ -39,12 +39,12 @@
   :group 'helm)
 
 (defcustom helm-directory-basedir nil
-  "Search this directory."
+  "Search directories that belong to this directory by helm."
   :group 'helm-directory
   :type 'string)
 
 (defcustom helm-directory-basedir-list nil
-  "List of search this directory."
+  "A list of `helm-directory-basedir' that can be set with `helm-directory-change'."
   :group 'helm-directory
   :type 'string)
 
@@ -53,11 +53,11 @@
     ("Open Directory" . helm-directory--open-dired)))
 
 (defun helm-directory--open-dired (file)
-  "Open file with dired as FILE."
+  "Open FILE with dired."
   (dired (file-name-directory file)))
 
 (defun helm-directory--list-candidates ()
-  "Helm-directory list candidates."
+  "Collect directory candidate list with find."
   (let ((paths))
     (when (file-exists-p (expand-file-name helm-directory-basedir))
       (with-temp-buffer
@@ -78,7 +78,7 @@
       :action helm-directory--action)))
 
 (defun helm-directory--ls-files ()
-  "Helm-directory list candidates."
+  "Display the files in the selected directory with helm interface."
   (with-current-buffer (helm-candidate-buffer 'global)
     (unless (zerop (apply #'call-process "ls" nil '(t nil) nil))
       (error "Failed: Can't get file list candidates"))))
