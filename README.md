@@ -1,4 +1,4 @@
-# helm-directory
+# helm-directory [![melpa badge][melpa-badge]][melpa-link] [![melpa stable badge][melpa-stable-badge]][melpa-stable-link]
 
 Select directory with helm and select the file in this directory with helm interface.
 
@@ -37,6 +37,11 @@ Since it is too late when there are too many files, so we will deal with it by s
 - Emacs 24.3 or higher
 - helm 2.0 or higher
 - find, ls command
+
+## Installation
+
+You can install `helm-directory.el` from [MELPA](http://melpa.org) with package.el
+(`M-x package-install helm-directory`).
 
 ## Sample Configuration
 
