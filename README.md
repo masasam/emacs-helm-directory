@@ -30,7 +30,7 @@ Select helm-directory-basedir from helm-directory-basedir-list with helm interfa
 
 Helm-directory searches directories of helm-directory-basedir.
 
-Since it is too late when there are too many files, so we will deal with it by switching the search target.
+Since it is too late when there are too many directories, so we will deal with it by switching the search target.
 
 ## Requirements
 
